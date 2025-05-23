@@ -1,0 +1,48 @@
+# madara
+# Classe : CFireStoreReponse
+# Traitement : Constructeur
+PROCÉDURE Constructeur(ohttpRéponse est un httpRéponse = Null, sExceptionMessage est une chaîne = "")
+
+SI ohttpRéponse = Null ALORS RETOUR
+
+SELON ohttpRéponse.CodeEtat
+
+	CAS  0
+		m_eErreurType			= errWindev
+		m_sbErreurWindevMessage	= sExceptionMessage
+
+	CAS 200
+		m_eErreurType			= errAucune
+		m_jsonDonneesDocument	= ohttpRéponse.Contenu
+
+	AUTRES CAS
+
+		m_eErreurType = errFirebase
+
+		vErrResultat	est un Variant	= JSONVersVariant(ohttpRéponse.Contenu)
+		vErr			est un Variant
+
+		SELON vErrResultat..Type
+			CAS wlVariantObjet
+				vErr = vErrResultat
+			CAS wlVariantTableau
+				vErr = vErrResultat[1]
+			AUTRE CAS
+
+		FIN
+
+		SELON vErr.error.status
+			CAS CONST_ARGUMENT_INVALIDE
+				m_bErrArgumentInvalide = Vrai
+			CAS CONST_NONAUTHENTIFIÉ
+				m_bErrNonAuthentifie = Vrai
+			CAS CONST_QUOTA_EPUISEE
+				m_bErrQuotaEpuisee = Vrai
+			CAS CONST_INDISPONIBLE
+				m_bErrServeurIndisponible = Vrai
+			CAS CONST_AUTORISATION_REFUSEE
+				m_bErrAutorisationRefusee = Vrai
+			AUTRES CAS
+				//				Trace("AUTRES CAS")
+		FIN
+FIN
