@@ -122,7 +122,7 @@ RENVOYER new CFireStoreReponse(m_HttpClientReponse)
 ## Lister
 PROCÉDURE Lister(_sColName est une chaîne) : CFireStoreReponse
 
-// Url
+# Url
 m_sUrl = ChaîneConstruit( CFireStore.CONST_FIRESTORE_BASE_URL , sPojetID)+[":runQuery"]
 
 // Select
@@ -130,15 +130,15 @@ Selectionner("usrid")
 Selectionner("Email")
 Selectionner("prds")
 
-// Where
+# Where
 Filtrer("usrid",DIFFERENT,0)
 Filtrer("usrid",SUPERIEUR_OU_EGAL,0)
 
-// Order By
+# Order By
 TrierPar("usrid",Décroissant)
 //TrierPar("__name__",Croissant)
 
-// Limit
+# Limit
 Limiter(1)
 
 m_stHttpOption.eMethode						= eHTTPPost

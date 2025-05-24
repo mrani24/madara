@@ -119,13 +119,13 @@ stField				est un STFieldPath
 
 bufOrder			est un Buffer
 
-// From
+# From
 stFrom.collectionId = _sCollName
 Sérialise(stFrom,bufFrom,psdJSON)
 taForm.AjouteLigne(bufFrom)
 jPayload.structuredQuery.from	= taForm
 
-// Select
+# Select
 SI ::m_tabListeChampsSelect..Occurrence>0 ALORS
 	
 	POUR TOUT chmp DE ::m_tabListeChampsSelect
@@ -139,7 +139,7 @@ SI ::m_tabListeChampsSelect..Occurrence>0 ALORS
 	jPayload.structuredQuery.select	= jSelect
 FIN
 
-// Where
+# Where
 SI ::m_tabListeDesFiltres..Occurrence>0 ALORS
 	
 	jFilter			est un Buffer
@@ -160,7 +160,7 @@ SI ::m_tabListeDesFiltres..Occurrence>0 ALORS
 	jPayload.structuredQuery.where.compositeFilter.op		= "OR"
 FIN
 
-// Order
+# Order
 SI ::m_tabListeChampsTrier..Occurrence>0 ALORS
 	taOrderby est un tableau de JSON
 	POUR TOUT m DE ::m_tabListeChampsTrier
@@ -175,7 +175,7 @@ SI ::m_tabListeChampsTrier..Occurrence>0 ALORS
 	jPayload.structuredQuery.orderBy = taOrderby
 FIN
 
-// Limit
+# Limit
 SI ::m_nValeurLimite>0 ALORS
 	jPayload.structuredQuery.limit = ::m_nValeurLimite
 FIN
