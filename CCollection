@@ -1,0 +1,37 @@
+## Déclaration
+CCollection est une Classe
+	hérite de CGenerateurRequeteFireStore
+PRIVÉ
+	m_sUrl					est une chaîne
+	m_sCollectionID			est une chaîne
+	m_stHttpOption			est STHttpOption
+	jsonDonneesConstruites	est un JSON
+	m_HttpClientReponse		est un restRéponse
+FIN
+
+## Constructeur
+PROCÉDURE Constructeur(sUrl est une chaîne)
+
+Constructeur CGenerateurRequeteFireStore()
+
+m_sCollectionID	= ExtraitChaîne(sUrl, rangDernier, "/")
+
+m_sUrl			= sUrl
+
+
+## Afficher
+PROCÉDURE Afficher(sDocumentID est une chaîne <utile> = ""):CFireStoreReponse
+
+m_sUrl+= ["/"]+"[%sDocumentID%]"
+
+m_stHttpOption.eMethode						= eHTTPGet
+m_stHttpOption.taEntête["Authorization"]	= "Bearer "+CAuth.ExposeToken
+m_stHttpOption.bufContenu					= ""
+
+m_HttpClientReponse							= CHttpClient.Envoie(m_sUrl, m_stHttpOption)
+
+SI ErreurDétectée() _OU_ m_HttpClientReponse.CodeEtat <> 200 ALORS
+	RENVOYER  new CFireStoreReponse(m_HttpClientReponse, ErreurInfo(errMessage))
+FIN
+
+RENVOYER new CFireStoreReponse(m_HttpClientReponse)
