@@ -194,21 +194,3 @@ PROCÉDURE Selectionner(_sField est une chaîne) : CGenerateurRequeteFireStore
 ::m_tabListeChampsSelect.Ajoute(_sField)
 
 RENVOYER objet
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
